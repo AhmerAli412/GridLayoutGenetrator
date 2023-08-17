@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Header from './components/Header';
 
@@ -85,7 +84,6 @@ function App() {
 
     setIsCopied(true);
 
-    // Reset the copied state after a short delay (e.g., 2 seconds)
     setTimeout(() => {
       setIsCopied(false);
     }, 2000);
@@ -103,23 +101,25 @@ function App() {
             <div className='flex'>
             <div className=" mt-4 mb-8">
             <span>No. of Rows</span>
-              <input
-                type="number"
-                id="rows"
-                min="1"
-                value={rows}
-                onChange={(e) => setRows(e.target.value)}
-                className="border-gray-300 bg-bg2 text-white ml-4 border h-10 w-40 px-2 py-1 rounded"
-              />
-                <span className='ml-4'>No. of Columns</span>
-              <input
-                type="number"
-                id="cols"
-                min="1"
-                value={cols}
-                onChange={(e) => setCols(e.target.value)}
-                className="border-gray-300 bg-bg2 text-white ml-5 h-10 w-40 border px-2 py-1 rounded"
-              />
+  <input
+    type="number"
+    id="rows"
+    min="1"
+    max="12" // Add max attribute
+    value={rows}
+    onChange={(e) => setRows(Math.min(Math.max(e.target.value, 1), 12))} // Apply restriction
+    className="border-gray-300 bg-bg2 text-white ml-4 border h-10 w-40 px-2 py-1 rounded"
+  />
+  <span className='ml-4'>No. of Columns</span>
+  <input
+    type="number"
+    id="cols"
+    min="1"
+    max="12" // Add max attribute
+    value={cols}
+    onChange={(e) => setCols(Math.min(Math.max(e.target.value, 1), 12))} // Apply restriction
+    className="border-gray-300 bg-bg2 text-white ml-5 h-10 w-40 border px-2 py-1 rounded"
+  />
 
               <button
                 data-modal-target="defaultModal"
@@ -139,7 +139,7 @@ function App() {
       
         </div>
       </div>
-      {/* Main modal */}
+  
       <div
         id="defaultModal"
         tabIndex="-1"
@@ -205,11 +205,3 @@ function App() {
 }
 
 export default App;
-
-
-
-
-
-
-
-
