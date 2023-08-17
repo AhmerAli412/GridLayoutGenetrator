@@ -1,403 +1,215 @@
-// import React, { useState } from "react";
-// import GridLayout from "./components/GridLayout";
 
-// function App() {
-//   const [columns, setColumns] = useState(3);
-//   const [rows, setRows] = useState(2);
-//   const [gap, setGap] = useState(15);
-//   const [width, setWidth] = useState("500px");
-//   const [height, setHeight] = useState("300px");
-//   const [code, setCode] = useState(`
-//     <GridLayout 
-//       columns={${columns}} 
-//       rows={${rows}} 
-//       gap={${gap}} 
-//       style={{
-//         width: "${width}",
-//         height: "${height}"
-//       }}
-//     >
-//       <div>Item 1</div>
-//       <div>Item 2</div>
-//       <div>Item 3</div>
-//       <div>Item 4</div>
-//       <div>Item 5</div>
-//       <div>Item 6</div>
-//     </GridLayout>
-//   `);
-//   const [css, setCss] = useState(`
-//     .grid-layout {
-//       display: grid;
-//       grid-template-columns: repeat(${columns}, 1fr);
-//       grid-template-rows: repeat(${rows}, 1fr);
-//       grid-gap: ${gap}px;
-//       width: ${width};
-//       height: ${height};
-//     }
-//   `);
+import React, { useState } from 'react';
+import Header from './components/Header';
 
-//   return (
-//     <div>
-//       <form>
-//         <div>
-//           <label htmlFor="columns">Columns:</label>
-//           <input
-//             type="number"
-//             id="columns"
-//             value={columns}
-//             onChange={e => setColumns(e.target.value)}
-//           />
-//         </div>
-//         <div>
-//           <label htmlFor="rows">Rows:</label>
-//           <input
-//             type="number"
-//             id="rows"
-//             value={rows}
-//             onChange={e => setRows(e.target.value)}
-//           />
-//         </div>
-//         <div>
-//           <label htmlFor="gap">Gap:</label>
-//           <input
-//             type="number"
-//             id="gap"
-//             value={gap}
-//             onChange={e => setGap(e.target.value)}
-//           />
-//         </div>
-//         <div>
-//           <label htmlFor="width">Width:</label>
-//           <input
-//             type="text"
-//             id="width"
-//             value={width}
-//             onChange={e => setWidth(e.target.value)}
-//           />
-//         </div>
-//         <div>
-//           <label htmlFor="height">Height:</label>
-//           <input
-//             type="text"
-//             id="height"
-//             value={height}
-//             onChange={e => setHeight(e.target.value)}
-//           />
-//         </div>
-//       </form>
-//       <GridLayout 
-//         columns={columns} 
-//         rows={height} 
-//         gap={gap} 
-//         style={{
-//           width: width,
-//           height: height
-//         }}
-//       >
-//         <div>Item 1</div>
-//         <div>Item 2</div>
-//         <div>Item 3</div>
-//         <div>Item 4</div>
-//         <div>Item 5</div>
-//         <div>Item 6</div>
-//       </GridLayout>
-//       <h3>CSS Code:</h3>
-//       <pre>
-//         {css}
-//       </pre>
-//       <h3>HTML Code:</h3>
-//       <pre>
-//         {code}
-//       </pre>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-import React, { useState } from "react";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import Hero from "./components/Hero";
-
-
-function GridLayout({ columns, rows, gap, width, height }) {
-  const templateColumns = `repeat(${columns}, 1fr)`;
-  const templateRows = `repeat(${rows}, 1fr)`;
+function GridCell({ label, isSelected, onClick }) {
+  const cellClass = label ? 'border border-gray-400' : '';
+  const selectedClass = isSelected ? 'bg-bg3' : 'bg-bg2';
 
   return (
     <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: templateColumns,
-        gridTemplateRows: templateRows,
-        gridGap: `${gap}px`,
-        width: width,
-        height: height,
-      }}
-    >
-      <div style={{
-         border:'1px solid black'
-      }}>Item 1</div>
-      <div style={{
-         border:'1px solid black'
-      }}>Item 2</div>
-      <div style={{
-         border:'1px solid black'
-      }}>Item 3</div>
-      <div style={{
-         border:'1px solid black'
-      }}>Item 4</div>
-      <div style={{
-         border:'1px solid black'
-      }}>Item 5</div>
-      <div style={{
-         border:'1px solid black'
-      }}>Item 6</div>
-    </div>
+      className={`h-16 w-20 lg:h-16 lg:w-20 sm:h-10 sm:w-8 flex items-center justify-center ${cellClass} ${selectedClass}`}
+      onClick={onClick}
+    ></div>
   );
 }
 
-function App() {
-  const [columns, setColumns] = useState(2);
-  const [rows, setRows] = useState(2);
-  const [gap, setGap] = useState(10);
-  const [width, setWidth] = useState("100%");
-  const [height, setHeight] = useState("auto");
-  const [css, setCSS] = useState(
-    `.grid-container {
-  display: grid;
-  grid-template-columns: repeat(${columns}, 1fr);
-  grid-template-rows: repeat(${rows}, 1fr);
-  grid-gap: ${gap}px;
-  width: ${width};
-  height: ${height};
-}`
-  );
-  const [code, setCode] = useState(
-    `<div class="grid-container">
-  <div>Item 1</div>
-  <div>Item 2</div>
-  <div>Item 3</div>
-  <div>Item 4</div>
-  <div>Item 5</div>
-  <div>Item 6</div>
-</div>`
-  );
 
-  const handleColumnChange = event => {
-    setColumns(event.target.value);
-    setCSS(
-      `.grid-container {
-  display: grid;
-  grid-template-columns: repeat(${event.target.value}, 1fr);
-  grid-template-rows: repeat(${rows}, 1fr);
-  grid-gap: ${gap}px;
-  width: ${width};
-  height: ${height};
-}`
-    );
-    setCode(
-      `<div class="grid-container">
-  <div>Item 1</div>
-  <div>Item 2</div>
-  <div>Item 3</div>
-  <div>Item 4</div>
-  <div>Item 5</div>
-  <div>Item 6</div>
-</div>`
-    );
+
+function App() {
+  const [rows, setRows] = useState(12);
+  const [cols, setCols] = useState(12);
+  const [selectedCells, setSelectedCells] = useState([]);
+  const [isCodeVisible, setIsCodeVisible] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
+  const originalCols = 12;
+
+  const generateGrid = () => {
+    const grid = [];
+
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        const label = String.fromCharCode(65 + j);
+        const isSelected = selectedCells.includes(`${i}-${j}`);
+        grid.push(
+          <GridCell
+            key={`${i}-${j}`}
+            label={label}
+            isSelected={isSelected}
+            onClick={() => handleCellClick(i, j)}
+          />
+        );
+      }
+
+      for (let j = cols; j < originalCols; j++) {
+        const isSelected = selectedCells.includes(`${i}-${j}`);
+        grid.push(
+          <GridCell
+            key={`${i}-${j}`}
+            label=""
+            isSelected={isSelected}
+            onClick={() => handleCellClick(i, j)}
+          />
+        );
+      }
+    }
+
+    return grid;
   };
 
-  const handleRowChange = event => {
-    setRows(event.target.value);
-    setCSS(
-      `.grid-container {
-  display: grid;
-  grid-template-columns: repeat(${columns}, 1fr);
-  grid-template-rows: repeat(${rows}, 1fr);
-    grid-gap: ${gap}px;
-    width: ${width};
-    height: ${height};
-  }`
-      );
-      setCode(
-        `<div class="grid-container">
-    <div>Item 1</div>
-    <div>Item 2</div>
-    <div>Item 3</div>
-    <div>Item 4</div>
-    <div>Item 5</div>
-    <div>Item 6</div>
-  </div>`
-      );
-    };
-  
-    const handleGapChange = event => {
-      setGap(event.target.value);
-      setCSS(
-        `.grid-container {
-    display: grid;
-    grid-template-columns: repeat(${columns}, 1fr);
-    grid-template-rows: repeat(${rows}, 1fr);
-    grid-gap: ${event.target.value}px;
-    width: ${width};
-    height: ${height};
-  }`
-      );
-      setCode(
-        `<div class="grid-container">
-    <div>Item 1</div>
-    <div>Item 2</div>
-    <div>Item 3</div>
-    <div>Item 4</div>
-    <div>Item 5</div>
-    <div>Item 6</div>
-  </div>`
-      );
-    };
-  
-    const handleWidthChange = event => {
-      setWidth(event.target.value);
-      setCSS(
-        `.grid-container {
-    display: grid;
-    grid-template-columns: repeat(${columns}, 1fr);
-    grid-template-rows: repeat(${rows}, 1fr);
-    grid-gap: ${gap}px;
-    width: ${event.target.value};
-    height: ${height};
-  }`
-      );
-      setCode(
-        `<div class="grid-container">
-    <div>Item 1</div>
-    <div>Item 2</div>
-    <div>Item 3</div>
-    <div>Item 4</div>
-    <div>Item 5</div>
-    <div>Item 6</div>
-  </div>`
-      );
-    };
-  
-    const handleHeightChange = event => {
-      setHeight(event.target.value);
-      setCSS(
-        `.grid-container {
-    display: grid;
-    grid-template-columns: repeat(${columns}, 1fr);
-    grid-template-rows: repeat(${rows}, 1fr);
-    grid-gap: ${gap}px;
-    width: ${width};
-    height: ${event.target.value};
-  }`
-      );
-      setCode(
-        `<div class="grid-container">
-    <div>Item 1</div>
-    <div>Item 2</div>
-    <div>Item 3</div>
-    <div>Item 4</div>
-    <div>Item 5</div>
-    <div>Item 6</div>
-  </div>`
-      );
-    };
-  
-    return (
-      <>
-      <Header/>
-      <Hero/>
-      <div >
-      <div className="text-center py-8 title-font sm:text-4xl text-3xl mb-4 font-medium  text-indigo-500">Enter your Credientials & Look how its Looking</div>
-      <div class="container mx-auto flex px-5 py-4 md:flex-row flex-col items-center">
+  const handleCellClick = (row, col) => {
+    const cellKey = `${row}-${col}`;
+    if (selectedCells.includes(cellKey)) {
+      setSelectedCells(selectedCells.filter((key) => key !== cellKey));
+    } else {
+      setSelectedCells([...selectedCells, cellKey]);
+    }
+  };
 
-<div className="ml-8">
-  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Column: </label>
-  <input type="number" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" value={columns} onChange={handleColumnChange} />
-</div>
+  const generateTailwindClasses = () => {
+    const classes = selectedCells.map((cellKey) => {
+      const [row, col] = cellKey.split('-');
+      return `<div className='row-start-${parseInt(row) + 1} row-end-${parseInt(row) + 2} col-start-${parseInt(col) + 1} col-end-${parseInt(col) + 2} h-30 w-30 bg-blue-300'></div>\n`;
+    });
 
-<div className="ml-8">
-<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Row:</label>
-<input type="number" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" value={rows} onChange={handleRowChange} />
-</div>
-<div className="ml-8">
-<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Gap:</label>
-<input type="number" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" value={gap} onChange={handleGapChange} />
-</div>
-<div className="ml-8">
-<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Width:</label>
-<input type="text" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" value={width} onChange={handleWidthChange} />
-</div>
-<div className="ml-8">
-<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Height:</label>
-<input type="text" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" value={height} onChange={handleHeightChange} />
-</div>
+    return classes.join('');
+  };
 
-</div>
+  const copyToClipboard = (text) => {
+    const textField = document.createElement('textarea');
+    textField.value = text;
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand('copy');
+    textField.remove();
 
-{/* <div className="text-center py-8 title-font sm:text-4xl text-3xl mb-4 font-medium  text-indigo-500">How is it Looking</div> */}
-      <div className="m-8">
-        <GridLayout columns={columns} rows={rows} gap={gap} width={width} height={height} />
-        </div>  
+    setIsCopied(true);
 
-      {/* input feilds */}
+    // Reset the copied state after a short delay (e.g., 2 seconds)
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 2000);
+  };
 
-{/* <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
 
-        <div>
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Column: </label>
-          <input type="number" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" value={columns} onChange={handleColumnChange} />
-      </div>
+  return (
+    <>
+      <Header />
+      <div className="min-h-screen bg-bg2 text-white py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <h1 className="mb-4 mt-4 text-4xl text-center font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Tailwind CSS Grid Layout Generator</h1>
+          <p className="mb-12 text-lg text-center font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400"> Create responsive grid layouts effortlessly with this Tailwind CSS generator. Define the number of rows and columns, and customize cell styles. Generate code snippets for your layout.</p>
+          <div className="bg-bg1 text-white w-full p-6 shadow-md rounded-lg mb-6">
+            <div className='flex'>
+            <div className=" mt-4 mb-8">
+            <span>No. of Rows</span>
+              <input
+                type="number"
+                id="rows"
+                min="1"
+                value={rows}
+                onChange={(e) => setRows(e.target.value)}
+                className="border-gray-300 bg-bg2 text-white ml-4 border h-10 w-40 px-2 py-1 rounded"
+              />
+                <span className='ml-4'>No. of Columns</span>
+              <input
+                type="number"
+                id="cols"
+                min="1"
+                value={cols}
+                onChange={(e) => setCols(e.target.value)}
+                className="border-gray-300 bg-bg2 text-white ml-5 h-10 w-40 border px-2 py-1 rounded"
+              />
 
-      <div className="ml-8">
-        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Row:</label>
-        <input type="number" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" value={rows} onChange={handleRowChange} />
-      </div>
-      <div className="ml-8">
-        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Gap:</label>
-        <input type="number" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" value={gap} onChange={handleGapChange} />
-      </div>
-      <div className="ml-8">
-        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Width:</label>
-        <input type="text" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" value={width} onChange={handleWidthChange} />
-      </div>
-      <div className="ml-8">
-        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Height:</label>
-        <input type="text" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" value={height} onChange={handleHeightChange} />
-      </div>
-
-      </div> */}
-
-      {/* code */}
-      <div className="text-center py-4 title-font sm:text-4xl text-3xl mb-4 font-medium text-indigo-500">Here is the code</div>
+              <button
+                data-modal-target="defaultModal"
+                className="bg-bg3 text-white ml-10 py-2 h-10 w-40 px-4 rounded-full"
+                type="button"
+                onClick={() => setIsCodeVisible(true)}
+              >
+                View Code
+              </button>
+          
+            </div>
+          </div>
+            <div className="grid-preview grid grid-cols-12 gap-2">
+              {generateGrid()}
+            </div>
+          </div>
       
-      {/* <div class="mx-auto w-1/2 flex px-5 py-4 md:flex-row flex-col items-center"> */}
-
-        
-    <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-2 justify-items-center">
-
-      <div className="w-96 border-2 border-black border-t-black-900 ml-8">
-        <label class="mb-2 text-sm font-medium text-gray-900 dark:text-black">CSS Code:</label>
-        <textarea class="block p-2.5 w-96 text-sm text-gray-900 bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 h-96" value={css} readOnly />
+        </div>
       </div>
-     
-
-
-      <div className="w-96 border-2 border-black border-t-black-900 ml-8">
-        <label class="mb-2 text-sm font-medium text-gray-900 dark:text-black">HTML Code:</label>
-        <textarea class="block p-2.5 w-96 text-sm text-gray-900 bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 h-96" value={code} readOnly />
+      {/* Main modal */}
+      <div
+        id="defaultModal"
+        tabIndex="-1"
+        aria-hidden="true"
+        className={`fixed top-0 left-0 right-0 z-50 ${
+          isCodeVisible ? 'block' : 'hidden'
+        } w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full`}
+      >
+        <div className="relative w-full max-w-2xl max-h-full">
+          <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                Generated Tailwind CSS Classes
+              </h3>
+              <button
+                type="button"
+                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                data-modal-hide="defaultModal"
+                onClick={() => setIsCodeVisible(false)}
+              >
+                <svg
+                  className="w-3 h-3"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 14"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                  />
+                </svg>
+                <span className="sr-only">Close modal</span>
+              </button>
+            </div>
+            <div className="p-6 space-y-6">
+              <pre className="text-base leading-relaxed text-gray-500 dark:text-gray-400 bg-bg2 p-2 rounded-md overflow-x-auto">
+                <code>
+                  {`<div className="grid grid-rows-${rows} grid-cols-${cols} gap-2">\n`}
+                  {generateTailwindClasses()}
+                  {`</div>`}
+                </code>
+              </pre>
+               <button
+                className={`bg-bg3 text-white py-2 px-4 rounded-full ${
+                  isCopied ? 'bg-green-900' : ''
+                }`}
+                onClick={() => {
+                  copyToClipboard(generateTailwindClasses());
+                }}
+              >
+                {isCopied ? 'Copied!' : 'Copy Code'}
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-     
-      </div>
-      
-    </div>
-    <Footer/>
     </>
   );
-};
+}
 
 export default App;
 
-  
+
+
+
+
+
+
+
