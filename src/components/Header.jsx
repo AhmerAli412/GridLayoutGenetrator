@@ -23,7 +23,7 @@ const Header = () => {
 
       <nav class="bg-white border-gray-200 dark:bg-gray-900">
         <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
-          <a href="https://flowbite.com" class="flex items-center">
+          <a href="#" class="flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 100 100"
@@ -47,7 +47,7 @@ const Header = () => {
 
           <div class="flex items-center">
             <a
-              href="https://github.com/AhmerAli412"
+              href="https://github.com/AhmerAli412/GridLayoutGenetrator"
               target="_blank"
               rel="noopener noreferrer"
             >
