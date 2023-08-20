@@ -1,7 +1,3 @@
-Certainly! Here's a README file template for your React application that generates grid layouts using Tailwind CSS classes:
-
----
-
 # Tailwind CSS Grid Layout Generator
 
 Create responsive grid layouts effortlessly with this Tailwind CSS generator. Define the number of rows and columns, customize cell styles, and generate code snippets for your layout.
