@@ -114,7 +114,7 @@ function App() {
     <input
       type="number"
       id="rows"
-      min="1"
+      min="0"
       max="12"
       value={rows}
       onChange={(e) => setRows(Math.min(Math.max(e.target.value, 1), 12))}
@@ -127,7 +127,7 @@ function App() {
     <input
       type="number"
       id="cols"
-      min="1"
+      min="0"
       max="12"
       value={cols}
       onChange={(e) => setCols(Math.min(Math.max(e.target.value, 1), 12))}
