@@ -21,7 +21,7 @@ const Header = () => {
   </div>
 </header> */}
 
-      <nav class="bg-white border-gray-200 dark:bg-gray-900">
+      <nav class="bg-gray-900 text-white border-gray-200 dark:bg-gray-900">
         <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
           <a href="#" class="flex items-center">
             <svg
