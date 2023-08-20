@@ -117,7 +117,7 @@ function App() {
       min="0"
       max="12"
       value={rows}
-      onChange={(e) => setRows(Math.min(Math.max(e.target.value, 1), 12))}
+      onChange={(e) => setRows(Math.min(Math.max(e.target.value, 0), 12))}
       className="border-gray-300 bg-bg2 text-white sm:w-20 border h-10 px-2 py-1 rounded"
     />
   </div>
@@ -130,7 +130,7 @@ function App() {
       min="0"
       max="12"
       value={cols}
-      onChange={(e) => setCols(Math.min(Math.max(e.target.value, 1), 12))}
+      onChange={(e) => setCols(Math.min(Math.max(e.target.value, 0), 12))}
       className="border-gray-300 bg-bg2 text-white sm:w-20 border h-10 px-2 py-1 rounded"
     />
   </div>
