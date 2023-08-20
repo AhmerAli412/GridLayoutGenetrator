@@ -145,9 +145,11 @@ function App() {
           </p>
           <div className="bg-bg1 text-white w-full p-6 shadow-md rounded-lg mb-6">
           <div className="flex mb-4">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center">
-  <div className="mb-4 sm:mb-0 sm:mr-4">
-    <span className="block sm:inline-block sm:mr-2">No. of Rows</span>
+          <div className="flex flex-col mb-4 md:flex-row md:items-center md:justify-between">
+  <div className="mb-2 md:mb-0 md:mr-4">
+    <label htmlFor="rows" className="block md:inline-block md:mr-2">
+      No. of Rows
+    </label>
     <input
       type="number"
       id="rows"
@@ -155,12 +157,14 @@ function App() {
       max="12"
       value={rows}
       onChange={(e) => setRows(Math.min(Math.max(e.target.value, 0), 12))}
-      className="border-gray-300 bg-bg2 text-white sm:w-20 border h-10 px-2 py-1 rounded"
+      className="border-gray-300 bg-bg2 text-white md:w-20 border h-10 px-2 py-1 rounded"
     />
   </div>
   
-  <div>
-    <span className="block sm:inline-block sm:mr-2">No. of Columns</span>
+  <div className="mb-2 md:mb-0 md:mr-4">
+    <label htmlFor="cols" className="block md:inline-block md:mr-2">
+      No. of Columns
+    </label>
     <input
       type="number"
       id="cols"
@@ -168,33 +172,34 @@ function App() {
       max="12"
       value={cols}
       onChange={(e) => setCols(Math.min(Math.max(e.target.value, 0), 12))}
-      className="border-gray-300 bg-bg2 text-white sm:w-20 border h-10 px-2 py-1 rounded"
+      className="border-gray-300 bg-bg2 text-white md:w-20 border h-10 px-2 py-1 rounded"
     />
   </div>
 
-  <div className="mb-4 md:ml-4 sm:mb-0 sm:mr-4">
-    <span className="block sm:inline-block sm:mr-2">Gap</span>
+  <div className="mb-2 md:mb-0 md:mr-4">
+    <label htmlFor="gap" className="block md:inline-block md:mr-2">
+      Gap
+    </label>
     <input
       type="number"
       id="gap"
       min="0"
       value={gap}
       onChange={(e) => setGap(e.target.value)}
-      className="border-gray-300 bg-bg2 text-white sm:w-20 border h-10 px-2 py-1 rounded"
+      className="border-gray-300 bg-bg2 text-white md:w-20 border h-10 px-2 py-1 rounded"
     />
   </div>
-</div>
 
-<div className="text-center mt-4 sm:mt-0">
   <button
     data-modal-target="defaultModal"
-    className="bg-bg3 text-white ml-2 py-2 px-4 rounded-full"
+    className="bg-bg3 text-white py-2 px-4 rounded-full md:self-end"
     type="button"
     onClick={() => setIsCodeVisible(true)}
   >
     View Code
   </button>
 </div>
+
 
 </div>
 
