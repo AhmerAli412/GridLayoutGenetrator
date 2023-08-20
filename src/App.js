@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import Header from './components/Header';
+import React, { useState } from "react";
+import Header from "./components/Header";
 
 function GridCell({ label, isSelected, onClick }) {
-  const cellClass = label ? 'border border-gray-400' : '';
-  const selectedClass = isSelected ? 'bg-bg3' : 'bg-bg2';
+  const cellClass = label ? "border border-gray-400" : "";
+  const selectedClass = isSelected ? "bg-bg3" : "bg-bg2";
 
   return (
     <div
@@ -12,8 +12,6 @@ function GridCell({ label, isSelected, onClick }) {
     ></div>
   );
 }
-
-
 
 function App() {
   const [rows, setRows] = useState(12);
@@ -67,19 +65,23 @@ function App() {
 
   const generateTailwindClasses = () => {
     const classes = selectedCells.map((cellKey) => {
-      const [row, col] = cellKey.split('-');
-      return `<div className='row-start-${parseInt(row) + 1} row-end-${parseInt(row) + 2} col-start-${parseInt(col) + 1} col-end-${parseInt(col) + 2} h-30 w-30 bg-blue-300'></div>\n`;
+      const [row, col] = cellKey.split("-");
+      return `<div className='row-start-${parseInt(row) + 1} row-end-${
+        parseInt(row) + 2
+      } col-start-${parseInt(col) + 1} col-end-${
+        parseInt(col) + 2
+      } h-30 w-30 bg-blue-300'></div>\n`;
     });
 
-    return classes.join('');
+    return classes.join("");
   };
 
   const copyToClipboard = (text) => {
-    const textField = document.createElement('textarea');
+    const textField = document.createElement("textarea");
     textField.value = text;
     document.body.appendChild(textField);
     textField.select();
-    document.execCommand('copy');
+    document.execCommand("copy");
     textField.remove();
 
     setIsCopied(true);
@@ -89,63 +91,71 @@ function App() {
     }, 2000);
   };
 
-
   return (
     <>
       <Header />
       <div className="min-h-screen bg-bg2 text-white py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <h1 className="mb-4 mt-4 text-4xl text-center font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Tailwind CSS Grid Layout Generator</h1>
-          <p className="mb-12 text-lg text-center font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400"> Create responsive grid layouts effortlessly with this Tailwind CSS generator. Define the number of rows and columns, and customize cell styles. Generate code snippets for your layout.</p>
+          <h1 className="mb-4 mt-4 text-4xl text-center font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+            Tailwind CSS Grid Layout Generator
+          </h1>
+          <p className="mb-12 text-lg text-center font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
+            {" "}
+            Create responsive grid layouts effortlessly with this Tailwind CSS
+            generator. Define the number of rows and columns, and customize cell
+            styles. Generate code snippets for your layout.
+          </p>
           <div className="bg-bg1 text-white w-full p-6 shadow-md rounded-lg mb-6">
-            <div className='flex'>
-            <div className=" mt-4 mb-8">
-            <span>No. of Rows</span>
-  <input
-    type="number"
-    id="rows"
-    min="1"
-    max="12" // Add max attribute
-    value={rows}
-    onChange={(e) => setRows(Math.min(Math.max(e.target.value, 1), 12))} // Apply restriction
-    className="border-gray-300 bg-bg2 text-white ml-4 border h-10 w-40 px-2 py-1 rounded"
-  />
-  <span className='ml-4'>No. of Columns</span>
-  <input
-    type="number"
-    id="cols"
-    min="1"
-    max="12" // Add max attribute
-    value={cols}
-    onChange={(e) => setCols(Math.min(Math.max(e.target.value, 1), 12))} // Apply restriction
-    className="border-gray-300 bg-bg2 text-white ml-5 h-10 w-40 border px-2 py-1 rounded"
-  />
+            <div className="flex">
+              <div className=" mt-4 mb-8">
+                <span>No. of Rows</span>
+                <input
+                  type="number"
+                  id="rows"
+                  min="1"
+                  max="12" // Add max attribute
+                  value={rows}
+                  onChange={(e) =>
+                    setRows(Math.min(Math.max(e.target.value, 1), 12))
+                  } // Apply restriction
+                  className="border-gray-300 bg-bg2 text-white ml-4 border h-10 w-40 px-2 py-1 rounded"
+                />
+                <span className="ml-4">No. of Columns</span>
+                <input
+                  type="number"
+                  id="cols"
+                  min="1"
+                  max="12" // Add max attribute
+                  value={cols}
+                  onChange={(e) =>
+                    setCols(Math.min(Math.max(e.target.value, 1), 12))
+                  } // Apply restriction
+                  className="border-gray-300 bg-bg2 text-white ml-5 h-10 w-40 border px-2 py-1 rounded"
+                />
 
-              <button
-                data-modal-target="defaultModal"
-                className="bg-bg3 text-white ml-10 py-2 h-10 w-40 px-4 rounded-full"
-                type="button"
-                onClick={() => setIsCodeVisible(true)}
-              >
-                View Code
-              </button>
-          
+                <button
+                  data-modal-target="defaultModal"
+                  className="bg-bg3 text-white ml-10 py-2 h-10 w-40 px-4 rounded-full"
+                  type="button"
+                  onClick={() => setIsCodeVisible(true)}
+                >
+                  View Code
+                </button>
+              </div>
             </div>
-          </div>
             <div className="grid-preview grid grid-cols-12 gap-2">
               {generateGrid()}
             </div>
           </div>
-      
         </div>
       </div>
-  
+
       <div
         id="defaultModal"
         tabIndex="-1"
         aria-hidden="true"
         className={`fixed top-0 left-0 right-0 z-50 ${
-          isCodeVisible ? 'block' : 'hidden'
+          isCodeVisible ? "block" : "hidden"
         } w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full`}
       >
         <div className="relative w-full max-w-2xl max-h-full">
@@ -186,15 +196,16 @@ function App() {
                   {`</div>`}
                 </code>
               </pre>
-               <button
+              <button
                 className={`bg-bg3 text-white py-2 px-4 rounded-full ${
-                  isCopied ? 'bg-green-900' : ''
+                  isCopied ? "bg-green-900" : ""
                 }`}
                 onClick={() => {
-                  copyToClipboard(generateTailwindClasses());
+                  const completeCode = `<div className="grid grid-rows-${rows} grid-cols-${cols} gap-2">\n${generateTailwindClasses()}</div>`;
+                  copyToClipboard(completeCode);
                 }}
               >
-                {isCopied ? 'Copied!' : 'Copy Code'}
+                {isCopied ? "Copied!" : "Copy Code"}
               </button>
             </div>
           </div>
