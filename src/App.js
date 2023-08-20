@@ -7,11 +7,12 @@ function GridCell({ label, isSelected, onClick }) {
 
   return (
     <div
-      className={`h-16 w-20 lg:h-16 lg:w-20 sm:h-10 sm:w-8 flex items-center justify-center ${cellClass} ${selectedClass}`}
+      className={`md:h-16 h-10  md:w-20 sm:h-10 sm:w-2 flex items-center justify-center ${cellClass} ${selectedClass}`}
       onClick={onClick}
     ></div>
   );
 }
+
 
 function App() {
   const [rows, setRows] = useState(12);
@@ -106,46 +107,52 @@ function App() {
             styles. Generate code snippets for your layout.
           </p>
           <div className="bg-bg1 text-white w-full p-6 shadow-md rounded-lg mb-6">
-            <div className="flex">
-              <div className=" mt-4 mb-8">
-                <span>No. of Rows</span>
-                <input
-                  type="number"
-                  id="rows"
-                  min="1"
-                  max="12" // Add max attribute
-                  value={rows}
-                  onChange={(e) =>
-                    setRows(Math.min(Math.max(e.target.value, 1), 12))
-                  } // Apply restriction
-                  className="border-gray-300 bg-bg2 text-white ml-4 border h-10 w-40 px-2 py-1 rounded"
-                />
-                <span className="ml-4">No. of Columns</span>
-                <input
-                  type="number"
-                  id="cols"
-                  min="1"
-                  max="12" // Add max attribute
-                  value={cols}
-                  onChange={(e) =>
-                    setCols(Math.min(Math.max(e.target.value, 1), 12))
-                  } // Apply restriction
-                  className="border-gray-300 bg-bg2 text-white ml-5 h-10 w-40 border px-2 py-1 rounded"
-                />
+          <div className="flex mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center">
+  <div className="mb-4 sm:mb-0 sm:mr-4">
+    <span className="block sm:inline-block sm:mr-2">No. of Rows</span>
+    <input
+      type="number"
+      id="rows"
+      min="1"
+      max="12"
+      value={rows}
+      onChange={(e) => setRows(Math.min(Math.max(e.target.value, 1), 12))}
+      className="border-gray-300 bg-bg2 text-white sm:w-20 border h-10 px-2 py-1 rounded"
+    />
+  </div>
+  
+  <div>
+    <span className="block sm:inline-block sm:mr-2">No. of Columns</span>
+    <input
+      type="number"
+      id="cols"
+      min="1"
+      max="12"
+      value={cols}
+      onChange={(e) => setCols(Math.min(Math.max(e.target.value, 1), 12))}
+      className="border-gray-300 bg-bg2 text-white sm:w-20 border h-10 px-2 py-1 rounded"
+    />
+  </div>
+</div>
 
-                <button
-                  data-modal-target="defaultModal"
-                  className="bg-bg3 text-white ml-10 py-2 h-10 w-40 px-4 rounded-full"
-                  type="button"
-                  onClick={() => setIsCodeVisible(true)}
-                >
-                  View Code
-                </button>
-              </div>
-            </div>
-            <div className="grid-preview grid grid-cols-12 gap-2">
-              {generateGrid()}
-            </div>
+<div className="text-center mt-4 sm:mt-0">
+  <button
+    data-modal-target="defaultModal"
+    className="bg-bg3 text-white ml-2 py-2 px-4 rounded-full"
+    type="button"
+    onClick={() => setIsCodeVisible(true)}
+  >
+    View Code
+  </button>
+</div>
+
+</div>
+
+            <div className="grid-preview grid grid-cols-12 gap-2 sm:grid-cols-2 md:grid-cols-12">
+        {generateGrid()}
+      </div>
+
           </div>
         </div>
       </div>
@@ -216,3 +223,6 @@ function App() {
 }
 
 export default App;
+
+
+
