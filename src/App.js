@@ -19,9 +19,6 @@ function GridCell({ label, isSelected, onClick, cellIndex }) {
   );
 }
 
-
-
-
 function App() {
   const [rows, setRows] = useState(12);
   const [cols, setCols] = useState(12);
@@ -29,13 +26,16 @@ function App() {
   const [isCodeVisible, setIsCodeVisible] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [selectedLabels, setSelectedLabels] = useState({});
+  // Inside your App component's state declarations
+const [activeTab, setActiveTab] = useState("jsx");
+
   const [gap, setGap] = useState(2); // Initial gap value
 
   const originalCols = 12;
 
   const generateGrid = () => {
     const grid = [];
-  
+
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
         const label = String.fromCharCode(65 + j);
@@ -51,7 +51,7 @@ function App() {
           />
         );
       }
-  
+
       for (let j = cols; j < originalCols; j++) {
         const isSelected = selectedCells.includes(`${i}-${j}`);
         const cellIndex = selectedCells.indexOf(`${i}-${j}`);
@@ -66,15 +66,14 @@ function App() {
         );
       }
     }
-  
+
     return grid;
   };
-  
 
   const handleCellClick = (row, col) => {
     const cellKey = `${row}-${col}`;
     const selectedCellIndex = selectedCells.indexOf(cellKey);
-  
+
     if (selectedCellIndex !== -1) {
       setSelectedCells(selectedCells.filter((key) => key !== cellKey));
     } else {
@@ -83,9 +82,8 @@ function App() {
       setSelectedLabels({ ...selectedLabels, [cellKey]: nextLabel });
     }
   };
-  
 
-  const generateTailwindClasses = () => {
+  const generateJsx = () => {
     const classes = selectedCells.map((cellKey) => {
       const [row, col] = cellKey.split("-");
       return `<div className='row-start-${parseInt(row) + 1} row-end-${
@@ -98,21 +96,18 @@ function App() {
     return classes.join("");
   };
 
-  // const generateTailwindClasses = () => {
-  //   const classes = selectedCells.map((cellKey) => {
-  //     const [row, col] = cellKey.split("-");
-  //     return `<div className='row-start-${parseInt(row) + 1} row-end-${
-  //       parseInt(row) + 2
-  //     } col-start-${parseInt(col) + 1} col-end-${
-  //       parseInt(col) + 2
-  //     } h-30 w-30 bg-blue-300'></div>\n`;
-  //   });
-  
-  //   const completeClasses = classes.join("");
-  //   const gapClasses = `grid-rows-${rows} grid-cols-${cols} gap-${gap}`;
-    
-  //   return `<div className="${gapClasses}">\n${completeClasses}</div>`;
-  // };
+  const generateHtml = () => {
+    const classes = selectedCells.map((cellKey) => {
+      const [row, col] = cellKey.split("-");
+      return `<div class='row-start-${parseInt(row) + 1} row-end-${
+        parseInt(row) + 2
+      } col-start-${parseInt(col) + 1} col-end-${
+        parseInt(col) + 2
+      } h-30 w-30 bg-blue-300'></div>\n`;
+    });
+
+    return classes.join("");
+  };
 
   const copyToClipboard = (text) => {
     const textField = document.createElement("textarea");
@@ -144,69 +139,79 @@ function App() {
             styles. Generate code snippets for your layout.
           </p>
           <div className="bg-bg1 text-white w-full p-6 shadow-md rounded-lg mb-6">
-          <div className="flex mb-4">
-          <div className="flex flex-col mb-4 md:flex-row md:items-center md:justify-between">
-  <div className="mb-2 md:mb-0 md:mr-4">
-    <label htmlFor="rows" className="block md:inline-block md:mr-2">
-      No. of Rows
-    </label>
-    <input
-      type="number"
-      id="rows"
-      min="0"
-      max="12"
-      value={rows}
-      onChange={(e) => setRows(Math.min(Math.max(e.target.value, 0), 12))}
-      className="border-gray-300 bg-bg2 text-white md:w-20 border h-10 px-2 py-1 rounded"
-    />
-  </div>
-  
-  <div className="mb-2 md:mb-0 md:mr-4">
-    <label htmlFor="cols" className="block md:inline-block md:mr-2">
-      No. of Columns
-    </label>
-    <input
-      type="number"
-      id="cols"
-      min="0"
-      max="12"
-      value={cols}
-      onChange={(e) => setCols(Math.min(Math.max(e.target.value, 0), 12))}
-      className="border-gray-300 bg-bg2 text-white md:w-20 border h-10 px-2 py-1 rounded"
-    />
-  </div>
+            <div className="flex mb-4">
+              <div className="flex flex-col mb-4 md:flex-row md:items-center md:justify-between">
+                <div className="mb-2 md:mb-0 md:mr-4">
+                  <label
+                    htmlFor="rows"
+                    className="block md:inline-block md:mr-2"
+                  >
+                    No. of Rows
+                  </label>
+                  <input
+                    type="number"
+                    id="rows"
+                    min="0"
+                    max="12"
+                    value={rows}
+                    onChange={(e) =>
+                      setRows(Math.min(Math.max(e.target.value, 0), 12))
+                    }
+                    className="border-gray-300 bg-bg2 text-white md:w-20 border h-10 px-2 py-1 rounded"
+                  />
+                </div>
 
-  <div className="mb-2 md:mb-0 md:mr-4">
-    <label htmlFor="gap" className="block md:inline-block md:mr-2">
-      Gap
-    </label>
-    <input
-      type="number"
-      id="gap"
-      min="0"
-      value={gap}
-      onChange={(e) => setGap(e.target.value)}
-      className="border-gray-300 bg-bg2 text-white md:w-20 border h-10 px-2 py-1 rounded"
-    />
-  </div>
+                <div className="mb-2 md:mb-0 md:mr-4">
+                  <label
+                    htmlFor="cols"
+                    className="block md:inline-block md:mr-2"
+                  >
+                    No. of Columns
+                  </label>
+                  <input
+                    type="number"
+                    id="cols"
+                    min="0"
+                    max="12"
+                    value={cols}
+                    onChange={(e) =>
+                      setCols(Math.min(Math.max(e.target.value, 0), 12))
+                    }
+                    className="border-gray-300 bg-bg2 text-white md:w-20 border h-10 px-2 py-1 rounded"
+                  />
+                </div>
 
-  <button
-    data-modal-target="defaultModal"
-    className="bg-bg3 text-white py-2 px-4 rounded-full md:self-end"
-    type="button"
-    onClick={() => setIsCodeVisible(true)}
-  >
-    View Code
-  </button>
-</div>
+                <div className="mb-2 md:mb-0 md:mr-4">
+                  <label
+                    htmlFor="gap"
+                    className="block md:inline-block md:mr-2"
+                  >
+                    Gap
+                  </label>
+                  <input
+                    type="number"
+                    id="gap"
+                    min="0"
+                    value={gap}
+                    onChange={(e) => setGap(e.target.value)}
+                    className="border-gray-300 bg-bg2 text-white md:w-20 border h-10 px-2 py-1 rounded"
+                  />
+                </div>
 
-
-</div>
+                <button
+                  data-modal-target="defaultModal"
+                  className="bg-bg3 text-white py-2 px-4 rounded-full md:self-end"
+                  type="button"
+                  onClick={() => setIsCodeVisible(true)}
+                >
+                  View Code
+                </button>
+              </div>
+            </div>
 
             <div className="grid-preview grid grid-cols-12 gap-2 sm:grid-cols-2 md:grid-cols-12">
-        {generateGrid()}
-      </div>
-
+              {generateGrid()}
+            </div>
           </div>
         </div>
       </div>
@@ -249,37 +254,75 @@ function App() {
                 <span className="sr-only">Close modal</span>
               </button>
             </div>
-            <div className="p-6 space-y-6">
-              <pre className="text-base leading-relaxed text-gray-500 dark:text-gray-400 bg-bg2 p-2 rounded-md overflow-x-auto">
-  <code>
-    {`<div className="grid grid-rows-${rows} grid-cols-${cols} gap-${gap}">\n`}
-    {generateTailwindClasses()}
-    {`</div>`}
-  </code>
-</pre>
 
-              <button
-                className={`bg-bg3 text-white py-2 px-4 rounded-full ${
-                  isCopied ? "bg-green-900" : ""
-                }`}
-                onClick={() => {
-                  const completeCode = `<div className="grid grid-rows-${rows} grid-cols-${cols} gap-2">\n${generateTailwindClasses()}</div>`;
-                  copyToClipboard(completeCode);
-                }}
-              >
-                {isCopied ? "Copied!" : "Copy Code"}
-              </button>
-            </div>
+
+
+
+           <div className="p-6 space-y-6">
+  <div className="flex">
+    <button
+      className={`py-2 px-4 rounded-t-lg ${
+        activeTab === "jsx"
+        ? "bg-gray-300 text-gray-800"
+        : "bg-gray-800 text-white"
+      }`}
+      onClick={() => setActiveTab("jsx")}
+    >
+      JSX
+    </button>
+    <button
+      className={`py-2 px-4 rounded-t-lg ${
+        activeTab === "html"
+          // ? "bg-gray-800 text-white"
+          // : "bg-gray-300 text-gray-800"
+          ? "bg-gray-300 text-gray-800"
+          : "bg-gray-800 text-white"
+      }`}
+      onClick={() => setActiveTab("html")}
+    >
+      HTML
+    </button>
+  </div>
+  {activeTab === "jsx" ? (
+    <pre className="text-base leading-relaxed text-gray-500 dark:text-gray-400 bg-bg2 p-2 rounded-md overflow-x-auto">
+      <code>
+        {`<div className="grid grid-rows-${rows} grid-cols-${cols} gap-${gap}">\n`}
+        {generateJsx()}
+        {`</div>`}
+      </code>
+    </pre>
+  ) : (
+    <pre className="text-base leading-relaxed text-gray-500 dark:text-gray-400 bg-bg2 p-2 rounded-md overflow-x-auto">
+      <code>
+        {`<div class="grid grid-rows-${rows} grid-cols-${cols} gap-${gap}">\n`}
+        {generateHtml()}
+        {`</div>`}
+      </code>
+    </pre>
+  )}
+
+  <button
+    className={`bg-bg3 text-white py-2 px-4 rounded-full ${
+      isCopied ? "bg-green-900" : ""
+    }`}
+    onClick={() => {
+      const completeCode =
+        activeTab === "jsx"
+          ? `<div className="grid grid-rows-${rows} grid-cols-${cols} gap-${gap}">\n${generateJsx()}</div>`
+          : `<div class="grid grid-rows-${rows} grid-cols-${cols} gap-${gap}">\n${generateHtml()}</div>`;
+
+      copyToClipboard(completeCode);
+    }}
+  >
+    {isCopied ? "Copied!" : "Copy Code"}
+  </button>
+</div>
+
           </div>
         </div>
-      
       </div>
-  
     </>
   );
 }
 
 export default App;
-
-
-
