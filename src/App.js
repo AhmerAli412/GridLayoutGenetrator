@@ -209,9 +209,10 @@ const [activeTab, setActiveTab] = useState("jsx");
               </div>
             </div>
 
-            <div className="grid-preview grid grid-cols-12 gap-2 sm:grid-cols-2 md:grid-cols-12">
-              {generateGrid()}
-            </div>
+            <div className="grid-preview grid grid-cols-12 gap-2 sm:grid-cols-2 md:grid-cols-12" style={{ gap: `${gap}px` }}>
+  {generateGrid()}
+</div>
+
           </div>
         </div>
       </div>
