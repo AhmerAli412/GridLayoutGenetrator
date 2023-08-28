@@ -27,7 +27,7 @@ function App() {
   const [isCopied, setIsCopied] = useState(false);
   const [selectedLabels, setSelectedLabels] = useState({});
   // Inside your App component's state declarations
-const [activeTab, setActiveTab] = useState("jsx");
+  const [activeTab, setActiveTab] = useState("jsx");
 
   const [gap, setGap] = useState(2); // Initial gap value
 
@@ -209,10 +209,12 @@ const [activeTab, setActiveTab] = useState("jsx");
               </div>
             </div>
 
-            <div className="grid-preview grid grid-cols-12 gap-2 sm:grid-cols-2 md:grid-cols-12" style={{ gap: `${gap}px` }}>
-  {generateGrid()}
-</div>
-
+            <div
+              className="grid-preview grid grid-cols-12 gap-2 sm:grid-cols-2 md:grid-cols-12"
+              style={{ gap: `${gap}px` }}
+            >
+              {generateGrid()}
+            </div>
           </div>
         </div>
       </div>
@@ -256,69 +258,65 @@ const [activeTab, setActiveTab] = useState("jsx");
               </button>
             </div>
 
+            <div className="p-6 space-y-6">
+              <div className="flex">
+                <button
+                  className={`py-2 px-4 rounded-t-lg ${
+                    activeTab === "jsx"
+                      ? "bg-gray-300 text-gray-800"
+                      : "bg-gray-800 text-white"
+                  }`}
+                  onClick={() => setActiveTab("jsx")}
+                >
+                  JSX
+                </button>
+                <button
+                  className={`py-2 px-4 rounded-t-lg ${
+                    activeTab === "html"
+                      ? // ? "bg-gray-800 text-white"
+                        // : "bg-gray-300 text-gray-800"
+                        "bg-gray-300 text-gray-800"
+                      : "bg-gray-800 text-white"
+                  }`}
+                  onClick={() => setActiveTab("html")}
+                >
+                  HTML
+                </button>
+              </div>
+              {activeTab === "jsx" ? (
+                <pre className="text-base leading-relaxed text-gray-500 dark:text-gray-400 bg-bg2 p-2 rounded-md overflow-x-auto">
+                  <code>
+                    {`<div className="grid grid-rows-${rows} grid-cols-${cols} gap-${gap}">\n`}
+                    {generateJsx()}
+                    {`</div>`}
+                  </code>
+                </pre>
+              ) : (
+                <pre className="text-base leading-relaxed text-gray-500 dark:text-gray-400 bg-bg2 p-2 rounded-md overflow-x-auto">
+                  <code>
+                    {`<div class="grid grid-rows-${rows} grid-cols-${cols} gap-${gap}">\n`}
+                    {generateHtml()}
+                    {`</div>`}
+                  </code>
+                </pre>
+              )}
 
+              <button
+                className={`bg-bg3 text-white py-2 px-4 rounded-full ${
+                  isCopied ? "bg-green-900" : ""
+                }`}
+                onClick={() => {
+                  const completeCode =
+                    activeTab === "jsx"
+                      ? `<div className="grid grid-rows-${rows} grid-cols-${cols} gap-${gap}">\n${generateJsx()}</div>`
+                      : `<div class="grid grid-rows-${rows} grid-cols-${cols} gap-${gap}">\n${generateHtml()}</div>`;
 
-
-           <div className="p-6 space-y-6">
-  <div className="flex">
-    <button
-      className={`py-2 px-4 rounded-t-lg ${
-        activeTab === "jsx"
-        ? "bg-gray-300 text-gray-800"
-        : "bg-gray-800 text-white"
-      }`}
-      onClick={() => setActiveTab("jsx")}
-    >
-      JSX
-    </button>
-    <button
-      className={`py-2 px-4 rounded-t-lg ${
-        activeTab === "html"
-          // ? "bg-gray-800 text-white"
-          // : "bg-gray-300 text-gray-800"
-          ? "bg-gray-300 text-gray-800"
-          : "bg-gray-800 text-white"
-      }`}
-      onClick={() => setActiveTab("html")}
-    >
-      HTML
-    </button>
-  </div>
-  {activeTab === "jsx" ? (
-    <pre className="text-base leading-relaxed text-gray-500 dark:text-gray-400 bg-bg2 p-2 rounded-md overflow-x-auto">
-      <code>
-        {`<div className="grid grid-rows-${rows} grid-cols-${cols} gap-${gap}">\n`}
-        {generateJsx()}
-        {`</div>`}
-      </code>
-    </pre>
-  ) : (
-    <pre className="text-base leading-relaxed text-gray-500 dark:text-gray-400 bg-bg2 p-2 rounded-md overflow-x-auto">
-      <code>
-        {`<div class="grid grid-rows-${rows} grid-cols-${cols} gap-${gap}">\n`}
-        {generateHtml()}
-        {`</div>`}
-      </code>
-    </pre>
-  )}
-
-  <button
-    className={`bg-bg3 text-white py-2 px-4 rounded-full ${
-      isCopied ? "bg-green-900" : ""
-    }`}
-    onClick={() => {
-      const completeCode =
-        activeTab === "jsx"
-          ? `<div className="grid grid-rows-${rows} grid-cols-${cols} gap-${gap}">\n${generateJsx()}</div>`
-          : `<div class="grid grid-rows-${rows} grid-cols-${cols} gap-${gap}">\n${generateHtml()}</div>`;
-
-      copyToClipboard(completeCode);
-    }}
-  >
-    {isCopied ? "Copied!" : "Copy Code"}
-  </button>
-</div>
-
+                  copyToClipboard(completeCode);
+                }}
+              >
+                {isCopied ? "Copied!" : "Copy Code"}
+              </button>
+            </div>
           </div>
         </div>
       </div>
